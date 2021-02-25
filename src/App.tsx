@@ -1,29 +1,33 @@
 import * as React from 'react'
+import { FC } from 'react'
+import 'react-hot-loader/patch'
 import { hot } from 'react-hot-loader/root'
-import themeManager from '@ices/theme'
-import Button from './Button'
 
-class App extends React.Component {
-  //
-  toggleTheme = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    themeManager.theme = event.target.value
-  }
+import { ThemeConsumer, ThemeProvider } from '@ices/theme/react'
+import ThemeSelect from './ThemeSelect'
 
-  render() {
-    const { theme } = themeManager
-    return (
-      <div>
-        <select defaultValue={theme} onChange={this.toggleTheme}>
-          {themeManager.themeList.map((theme) => (
-            <option key={theme}>{theme}</option>
-          ))}
-        </select>
-        <div>
-          <Button />
-        </div>
+const App: FC = function (props) {
+  return (
+    <ThemeProvider>
+      <div style={{ margin: '16px' }}>
+        <ThemeConsumer>
+          {(theme) => (
+            <label
+              style={{
+                paddingRight: '8px',
+                color: theme === 'dark' ? '#c9d1d9' : '#24292e'
+              }}
+              htmlFor="react-theme-select"
+            >
+              Select Theme:
+            </label>
+          )}
+        </ThemeConsumer>
+        <ThemeSelect id="react-theme-select" />
+        <div className="stage">{props.children}</div>
       </div>
-    )
-  }
+    </ThemeProvider>
+  )
 }
 
 export default hot(App)
