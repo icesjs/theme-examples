@@ -8,9 +8,11 @@ const cls = classNames.bind(style)
 
 function ReactScssButton() {
   return (
-    <button className={cls('button-global-scss', 'button')}>
-      ReactScssButton
-    </button>
+    <div className={cls('buttonWrapper')}>
+      <button className={cls('button-global-scss-react', 'button')}>
+        ReactScssButton
+      </button>
+    </div>
   )
 }
 

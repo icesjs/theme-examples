@@ -8,9 +8,11 @@ const cls = classNames.bind(style)
 
 function ReactLessButton() {
   return (
-    <button className={cls('button-global-less', 'button')}>
-      ReactLessButton
-    </button>
+    <div className={cls('buttonWrapper')}>
+      <button className={cls('button-global-less-react', 'button')}>
+        ReactLessButton
+      </button>
+    </div>
   )
 }
 

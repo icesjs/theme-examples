@@ -5,6 +5,8 @@
   --button-border-color: #30363d;
   --button-box-shadow: 0 0 transparent;
   --button-box-inset-shadow: 0 0 transparent;
+  --background-image: url(../../images/hamburger-01.png);
+  --button-background-image: url('../../images/man.svg');
+  --div-border-color: #c9d1d9;
+  --can-not-use-as-theme-var: 4px;
 }
-
-

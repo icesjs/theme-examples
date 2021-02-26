@@ -1,0 +1,35 @@
+@import './themes/dark'
+
+body
+  /* auto check value of color */
+  background: $body-background-color
+  min-height: 100vh
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-direction: column
+  transition: background-color 200ms
+
+select,
+button
+  cursor: pointer
+
+button
+  width: 160px
+
+/* local var */
+$div-border-color: transparent
+
+.stage
+  margin: 10px 0
+  padding-right: 40px
+  /* only process color by default */
+  /* do not process the var that is not a value of color */
+  border-width: $can-not-use-as-theme-var
+  /* local var can override the theme var */
+  border-color: $div-border-color
+  border-style: solid
+  /* auto rewrite relative url that imported from theme */
+  background: $background-image no-repeat right
+  background-size: contain
+

@@ -2,7 +2,8 @@
 @import './themes/dark.css';
 
 body {
-  background-color: var(--body-background-color);
+  /* auto check value of color */
+  background: var(--body-background-color);
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -11,10 +12,30 @@ body {
   transition: background-color 200ms;
 }
 
+select,
 button {
-  margin: 0 8px 8px 0;
+  cursor: pointer;
+}
+
+button {
+  width: 160px;
+}
+
+:root {
+  /* local var */
+  --div-border-color: transparent;
 }
 
 .stage {
   margin: 10px 0;
+  padding-right: 40px;
+  /* only process color by default */
+  /* do not process the var that is not a value of color */
+  border-width: var(--can-not-use-as-theme-var);
+  /* local var can override the theme var */
+  border-color: var(--div-border-color);
+  border-style: solid;
+  /* auto rewrite relative url that imported from theme */
+  background: var(--background-image) no-repeat right;
+  background-size: contain;
 }

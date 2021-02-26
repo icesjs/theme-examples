@@ -1,6 +1,6 @@
 @import '../themes/dark.css';
 
-.button-global-css {
+.button-global-css-react {
   color: var(--button-color);
   border: 1px solid var(--button-border-color);
   background-color: var(--button-background-color);

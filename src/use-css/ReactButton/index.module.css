@@ -6,3 +6,10 @@
   background-color: var(--button-background-color);
   box-shadow: var(--button-box-shadow), var(--button-box-inset-shadow);
 }
+
+.buttonWrapper {
+  display: inline-block;
+  padding: 10px 10px 10px 60px;
+  background: var(--button-background-image) no-repeat left;
+  background-size: contain;
+}

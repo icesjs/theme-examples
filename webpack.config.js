@@ -2,6 +2,7 @@ const path = require('path')
 const VueLoader = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const ThemeWebpackPlugin = require('@ices/theme-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
@@ -11,10 +12,21 @@ module.exports = ({ syntax = 'css' }, { mode, hot }) => ({
       themes: [`src/use-${syntax}/themes/*.${syntax}`],
       defaultTheme: 'dark',
       outputPath: 'css/themes'
+      // extract: false
     }),
     mode === 'production' &&
       new MiniCssExtractPlugin({
         filename: 'css/[name].[contenthash:8].css'
+      }),
+    mode === 'production' &&
+      new OptimizeCSSAssetsPlugin({
+        cssProcessorOptions: {
+          parser: require('postcss-safe-parser'),
+          map: false
+        },
+        cssProcessorPluginOptions: {
+          preset: ['default', { minifyFontValues: { removeQuotes: false } }]
+        }
       }),
     new VueLoader.VueLoaderPlugin(),
     new HtmlWebpackPlugin({
@@ -22,7 +34,7 @@ module.exports = ({ syntax = 'css' }, { mode, hot }) => ({
       templateContent: `
         <html lang='en'>
           <head>
-            <title>Examples: use ${syntax}</title>
+            <title>Examples: ${`${syntax}`.toUpperCase()}</title>
           </head>
           <body>
             <div id="react-app"></div>
@@ -51,7 +63,7 @@ module.exports = ({ syntax = 'css' }, { mode, hot }) => ({
         loader: 'url-loader',
         options: {
           mimetype: 'image/png',
-          limit: 10000,
+          limit: 4 * 1024,
           name: 'img/[name].[contenthash:8].[ext]'
         }
       },
@@ -115,7 +127,7 @@ function getStyleLoaders(syntaxList, mode) {
           {
             loader: `css-loader`,
             options: {
-              esModule: false,
+              esModule: mode === 'production',
               importLoaders: preprocess ? 2 : 1,
               modules:
                 condition === 'include'
@@ -124,7 +136,12 @@ function getStyleLoaders(syntaxList, mode) {
             }
           },
           'postcss-loader',
-          preprocess && `${/^s[ac]ss$/.test(syntax) ? 'sass' : syntax}-loader`
+          preprocess && {
+            loader: `${/^s[ac]ss$/.test(syntax) ? 'sass' : syntax}-loader`,
+            options: /^sass$/.test(syntax)
+              ? { sassOptions: { indentedSyntax: true } }
+              : {}
+          }
         ].filter(Boolean)
       }))
     })
