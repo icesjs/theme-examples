@@ -10,9 +10,7 @@ module.exports = ({ syntax = 'css' }, { mode, hot }) => ({
   plugins: [
     new ThemeWebpackPlugin({
       themes: [`src/use-${syntax}/themes/*.${syntax}`],
-      defaultTheme: 'dark',
-      outputPath: 'css/themes'
-      // extract: false
+      defaultTheme: 'dark'
     }),
     mode === 'production' &&
       new MiniCssExtractPlugin({
@@ -46,6 +44,17 @@ module.exports = ({ syntax = 'css' }, { mode, hot }) => ({
     }),
     new CleanWebpackPlugin()
   ].filter(Boolean),
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', '.vue'],
+    alias: {
+      vue$: require.resolve('vue/dist/vue.esm.js'),
+      'react-dom': '@hot-loader/react-dom',
+      '@css': path.resolve('src/use-css/themes'),
+      '@less': path.resolve('src/use-less/themes'),
+      '@scss': path.resolve('src/use-scss/themes'),
+      '@sass': path.resolve('src/use-sass/themes')
+    }
+  },
   devtool: mode === 'development' && 'source-map',
   target: 'web',
   module: {
@@ -84,13 +93,6 @@ module.exports = ({ syntax = 'css' }, { mode, hot }) => ({
     filename: `js/[name].[${hot ? 'fullhash:8' : 'contenthash:8'}].js`,
     pathinfo: mode === 'development',
     publicPath: './'
-  },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.vue'],
-    alias: {
-      'react-dom': '@hot-loader/react-dom',
-      vue$: require.resolve('vue/dist/vue.esm.js')
-    }
   },
   devServer: {
     contentBase: './dist',

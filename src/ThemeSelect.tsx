@@ -5,7 +5,7 @@ import {
   useCallback,
   VFC
 } from 'react'
-import { themeList, useTheme } from '@ices/theme/react'
+import { useTheme } from '@ices/theme/react'
 
 type ThemeSelectProps = Pick<
   SelectHTMLAttributes<HTMLSelectElement>,
@@ -14,10 +14,14 @@ type ThemeSelectProps = Pick<
 type ChangeHandlerType = ChangeEventHandler<HTMLSelectElement>
 
 const ThemeSelect: VFC<ThemeSelectProps> = function (props) {
-  const [theme, setTheme] = useTheme()
+  const [theme, themeList, changeTheme] = useTheme(
+    localStorage.getItem('theme') || ''
+  )
 
   const handleChange = useCallback<ChangeHandlerType>((event) => {
-    setTheme(event.target.value).then()
+    changeTheme(event.target.value).then((theme) => {
+      localStorage.setItem('theme', theme)
+    })
   }, [])
 
   return (

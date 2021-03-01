@@ -15,7 +15,10 @@ export default {
   name: 'ThemeSelect',
   inheritAttrs: false,
   data() {
-    return { themeList: themeManager.themeList, theme: themeManager.theme }
+    return {
+      themeList: themeManager.themeList,
+      theme: localStorage.getItem('theme') || themeManager.theme
+    }
   },
   watch: {
     theme(value) {
@@ -25,6 +28,7 @@ export default {
   mounted() {
     const handler = ({ data: { current } }) => {
       this.theme = current
+      localStorage.setItem('theme', current)
     }
     this.unsubscribe = themeManager.subscribe('change', handler)
   },
