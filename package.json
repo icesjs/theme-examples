@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@hot-loader/react-dom": "^17.0.1+4.13.0",
-    "@ices/theme-webpack-plugin": "^1.4.0",
+    "@ices/theme-webpack-plugin": "^1.4.1",
     "@types/classnames": "^2.2.11",
     "@types/mini-css-extract-plugin": "^1.2.2",
     "@types/node": "^14.14.31",
